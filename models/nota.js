@@ -18,13 +18,13 @@ const NotaSchema = mongoose.Schema({
 const Nota = module.exports = mongoose.model('Nota',NotaSchema);
 
 module.exports.getNotasPorEstudante = function(std_id,callback){
-    const query = {std_id: std_id}
-    Nota.find(query,callback);
+    Nota.find(std_id,callback);
 }
 
-module.exports.getNotasPorMes = function(std_id,mes,callback){
-    const query = {std_id: std_id, mes: mes};
-    Nota.find(query,callback);
+module.exports.getNotasPorMes = function(condition,callback){
+    // console.log(condition);
+    // const query = {std_id, mes};
+    Nota.find(condition,callback);
 }
 
 module.exports.addNotaPorMes = function(novaNota,callback){
@@ -37,7 +37,6 @@ module.exports.updateNota = function(uptNota,callback){
 }
 
 module.exports.removeNotas = function(std_id,callback){
-    const query = {std_id: std_id};
-    Nota.remove(query,callback);
+    Nota.remove(std_id,callback);
 }
 // module.exports.addNota = function()

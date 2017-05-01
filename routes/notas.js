@@ -16,7 +16,8 @@ router.get('/notas/:std_id',function(req,res,next){
 
 // Notas do estudante no mes X
 router.get('/nota/:std_id/:mes',function(req,res,next){
-    Nota.getNotasPorMes({std_id: req.params.std_id, mes: req.params.mes}, (err,nota) => {
+    const condition = {std_id: req.params.std_id, mes: req.params.mes};
+    Nota.getNotasPorMes(condition, (err,nota) => {
         if(err){
             res.send(err);
         }
@@ -40,12 +41,13 @@ router.post('/nota/:std_id/:mes',function(req,res,next){
 })
 
 // Atualiza nota
-route.put('/nota/:id',function(req,res,next){
+router.put('/nota/:id',function(req,res,next){
     const nota = req.body;
     let uptNota = {};
 
     if(nota.value){
         uptNota = nota;
+        uptNota._id = req.params.id;
     }
 
     Nota.updateNota(uptNota,(err,_nota) => {
@@ -57,8 +59,8 @@ route.put('/nota/:id',function(req,res,next){
 })
 
 // Deletar notas do estudante, caso ele seja deletado
-route.delete('/notas/:std_id',function(req,res,next){
-    Nota.removeNotas({std_is: req.params.std_id},(err,nota)=>{
+router.delete('/notas/:std_id',function(req,res,next){
+    Nota.removeNotas({std_id: req.params.std_id},(err,nota)=>{
         if(err){
             res.send(err);
         }

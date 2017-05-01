@@ -19,8 +19,7 @@ module.exports.getEstudanteById = function(id,callback){
 }
 
 module.exports.getEstudanteByName = function(name,callback){
-    const query = {name: name};
-    Estudantes.find(query,callback);
+    Estudantes.find(name,callback);
 }
 
 module.exports.addEstudante = function(novoEstudante,callback){
@@ -33,5 +32,5 @@ module.exports.updateEstudante = function(novoEstudante,callback){
 }
 
 module.exports.removeEstudante = function(id,callback){
-    Estudantes.remove({_id: id},callback);
+    Estudantes.remove(id,callback);
 }

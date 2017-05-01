@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const config = require('../config/database');
 const Estudante = require('../models/estudante');
-const Nota = requir('../models.nota');
+const Nota = require('../models/nota');
 
 // Get para todos os estudantes
 router.get('/estudantes',function(req,res,next){
@@ -17,7 +17,7 @@ router.get('/estudantes',function(req,res,next){
 
 // Get estudante por id
 router.get('/estudante/:id',function(req,res,next){
-    Estudante.getEstudanteById({id: req.params.id},(err,estudante)=>{
+    Estudante.getEstudanteById({_id: req.params.id},(err,estudante)=>{
         if(err){
             res.send(err);
         }
@@ -27,14 +27,14 @@ router.get('/estudante/:id',function(req,res,next){
 
 // ! Not working
 // Get estudante por nome
-// router.post('/estudante',function(req,res,next){
-//     Estudante.getEstudanteByName({name: req.body.name},(err,estudante)=>{
-//         if(err){
-//             res.send(err);
-//         }
-//         res.json(estudante);
-//     })
-// })
+router.post('/estudante/nome',function(req,res,next){
+    Estudante.getEstudanteByName({name: req.body.name},(err,estudante)=>{
+        if(err){
+            res.send(err);
+        }
+        res.json(estudante);
+    })
+})
 
 // Save estudante
 router.post('/estudante',function(req,res,next){
@@ -51,10 +51,10 @@ router.post('/estudante',function(req,res,next){
             res.json({success: true, msg:"Estudante cadastrado"});
             // Criar quatro notas para o aluno
             for(var i=1;i<=4;i++){
-                var nota = new Nota{
-                    std_id: estudante.std_id,
+                var nota = new Nota({
+                    std_id: estudante._id,
                     mes: i
-                }
+                });
                 Nota.addNotaPorMes(nota);
             }
         }
@@ -99,7 +99,7 @@ router.delete('/estudante/:id',function(req,res,next){
         } else {
             res.json(estudante);
             // deletar notas do estudante
-            Nota.removeNotas(req.params.id);
+            Nota.removeNotas({std_id: req.params.id});
         }
 
     })
