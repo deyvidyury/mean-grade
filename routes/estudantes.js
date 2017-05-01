@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const config = require('../config/database');
 const Estudante = require('../models/estudante');
+const Nota = requir('../models.nota');
 
 // Get para todos os estudantes
 router.get('/estudantes',function(req,res,next){
@@ -47,6 +48,13 @@ router.post('/estudante',function(req,res,next){
         } else {
             res.json({success: true, msg:"Estudante cadastrado"});
             // Criar quatro notas para o aluno
+            for(var i=1;i<=4;i++){
+                var nota = new Nota{
+                    std_id: estudante.std_id,
+                    mes: i
+                }
+                Nota.addNotaPorMes(nota);
+            }
         }
     })
 
@@ -82,8 +90,14 @@ router.put('/estudante',function(req,res,next){
 
 router.delete('/estudante/:id',function(req,res,next){
     Estudante.removeEstudante({_id: req.params.id},(err,estudante) => {
-        if(err) throw err;
-        res.json(estudante);
+        if(err) {
+            res.send(err);
+        } else {
+            res.json(estudante);
+            // deletar notas do estudante
+            Nota.removeNotas(req.params.id);
+        }
+
     })
 })
 
