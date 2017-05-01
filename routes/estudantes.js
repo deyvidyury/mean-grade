@@ -8,7 +8,9 @@ const Nota = requir('../models.nota');
 // Get para todos os estudantes
 router.get('/estudantes',function(req,res,next){
     Estudante.getAllEstudantes((err,estudantes)=>{
-        if(err) throw err;
+        if(err){
+            res.send(err);
+        }
         return res.json(estudantes);
     });
 });
@@ -73,7 +75,9 @@ router.put('/estudante',function(req,res,next){
     console.log(uptEstudante);
 
     Estudante.updateEstudante(uptEstudante,(err,_estudante) => {
-        if(err) throw err;
+        if(err){
+            res.send(err);
+        }
         res.json(_estudante);
     })
 
