@@ -45,8 +45,25 @@ route.put('/nota/:id',function(req,res,next){
     let uptNota = {};
 
     if(nota.value){
-        
+        uptNota = nota;
     }
+
+    Nota.updateNota(uptNota,(err,_nota) => {
+        if(err){
+            res.send(err);
+        }
+        res.json(_nota);
+    })
+})
+
+// Deletar notas do estudante, caso ele seja deletado
+route.delete('/notas/:std_id',function(req,res,next){
+    Nota.removeNotas({std_is: req.params.std_id},(err,_estudante)=>{
+        if(err){
+            res.send(err);
+        }
+        res.json(_estudante);
+    })
 })
 
 module.exports = router;

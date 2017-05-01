@@ -46,9 +46,8 @@ router.post('/estudante',function(req,res,next){
             res.json({success: false, msg:"Nao pode salvar estudante"});
         } else {
             res.json({success: true, msg:"Estudante cadastrado"});
+            // Criar quatro notas para o aluno
         }
-
-        // Criar quatro notas para o aluno
     })
 
 
