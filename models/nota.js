@@ -27,4 +27,17 @@ module.exports.getNotasPorMes = function(std_id,mes,callback){
     Nota.find(query,callback);
 }
 
+module.exports.addNotaPorMes = function(novaNota,callback){
+    novaNota.save(callback);
+}
+
+module.exports.updateNota = function(uptNota,callback){
+    const query = {_id: uptNota._id}
+    Nota.findOneAndUpdate(query,{value: uptNota.value},callback);
+}
+
+module.exports.removeNotas = function(std_id,callback){
+    const query = {std_id: std_id};
+    Nota.remove(query,callback);
+}
 // module.exports.addNota = function()

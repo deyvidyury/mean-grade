@@ -58,11 +58,11 @@ route.put('/nota/:id',function(req,res,next){
 
 // Deletar notas do estudante, caso ele seja deletado
 route.delete('/notas/:std_id',function(req,res,next){
-    Nota.removeNotas({std_is: req.params.std_id},(err,_estudante)=>{
+    Nota.removeNotas({std_is: req.params.std_id},(err,nota)=>{
         if(err){
             res.send(err);
         }
-        res.json(_estudante);
+        res.json(nota);
     })
 })
 
