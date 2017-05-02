@@ -1,3 +1,24 @@
-<p>
-  boletim works!
-</p>
+<!-- <form class="well" (submit)="addTask($event)">
+    <div class="form-group">
+        <div class="input-group">
+            <input type="text" [(ngModel)]="title" name="title" class="form-control" placeholder="Add Task">
+            <span class="input-group-btn">
+                <input type="button" class="btn btn-primary" value="+" (click)="addTask($event)">
+            </span>
+        </div>
+
+    </div>
+</form> -->
+
+<div class="estudantes-list">
+    <div *ngFor="let estudante of estudantes">
+
+        <div class="col-xs-7 col-sm-7 col-md-7">
+            {{estudante.name}}
+        </div>
+        <!-- <div class="col-xs-4 col-sm-4 col-md-4">
+            <input type="button" (click)="deleteTask(task._id)" value="delete" class="btn btn-danger">
+        </div> -->
+        <br><br>
+    </div>
+</div>
