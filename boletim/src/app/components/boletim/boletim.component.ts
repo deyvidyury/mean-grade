@@ -13,10 +13,19 @@ export class BoletimComponent implements OnInit {
     estudantes:any [];
     name: string;
 
-  constructor(private estudanteService: EstudanteService) {
+  constructor(private estudanteService: EstudanteService, private notaService: NotaService) {
       this.estudanteService.getEstudantes().subscribe(estudantes => {
           this.estudantes = estudantes;
-      })
+      });
+
+      // adicionar notas ao respectivo estudante
+      for(var i=0;i<this.estudantes.length;i++){
+          var notas = [];
+          this.notaService.getNotasEstudante(this.estudantes[i]._id).subscribe(_notas => {
+              notas = _notas;
+          })
+          this.estudantes[i].notas = notas;
+      }
   }
 
   ngOnInit() {
