@@ -11,7 +11,7 @@ export class NotaService {
   getNotasEstudante(id){
       let headers = new Headers();
       headers.append('Content-Type','application/json');
-      return this.http.get('/api/notas/'+id,{headers: headers})
+      return this.http.get('http://localhost:3000/api/notas/'+id,{headers: headers})
         .map(res => res.json());
   }
 

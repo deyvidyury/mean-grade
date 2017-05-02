@@ -46,9 +46,11 @@ router.post('/estudante',function(req,res,next){
 
     Estudante.addEstudante(novoEstudante, (err,estudante) => {
         if(err){
-            res.json({success: false, msg:"Nao pode salvar estudante"});
+            res.json(err);
+            //res.json({success: false, msg:"Nao pode salvar estudante"});
         } else {
-            res.json({success: true, msg:"Estudante cadastrado"});
+            res.json(estudante);
+            //res.json({success: true, msg:"Estudante cadastrado"});
             // Criar quatro notas para o aluno
             for(var i=1;i<=4;i++){
                 var nota = new Nota({
