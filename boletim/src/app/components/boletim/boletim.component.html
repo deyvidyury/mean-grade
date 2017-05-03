@@ -12,17 +12,41 @@
 
 <div class="estudante-list">
     <div *ngFor="let estudante of estudantes">
-        <div class="col-xs-3 col-sm-3 col-md-3">
+        <div class="col-xs-9 col-sm-9 col-md-9" (click)="clique(estudante)" data-toggle="modal" data-target="#myModal">
             {{estudante.name}}
         </div>
-        <div class="col-xs-6 col-sm-6 col-md-6">
+    
+        <!-- <div class="col-xs-6 col-sm-6 col-md-6">
             <div *ngFor"let nota of estudante.notas">
                 {{nota.value+" "}}
             </div>
-        </div>
-        <div class="col-xs-4 col-sm-4 col-md-4">
-            <input type="button" (click)="deleteEstudante(estudante._id)" value="Deletar estudante" class="btn btn-danger">
+        </div> -->
+        <div class="col-xs-3 col-sm-3 col-md-3">
+            <input type="button" (click)="deleteEstudante(estudante._id)" value="Deletar" class="btn btn-danger">
         </div>
         <br><br>
     </div>
 </div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <div class="input-group">
+            <input type="text" [(ngModel)]="novoNome" name="novoNome" class="form-control" placeholder="Adicionar estudante">
+            <span class="input-group-btn">
+                <input type="button" class="btn btn-primary" value="+" (click)="salvarNome()" data-dismiss="modal">
+            </span>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="salvarNome()">Salvar</button>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -12,20 +12,32 @@ import { NotaService } from '../../services/nota.service';
 export class BoletimComponent implements OnInit {
     estudantes:any [];
     name: string;
+    estudanteSelecionado: Estudante;
+    novoNome: string;
+
 
   constructor(private estudanteService: EstudanteService, private notaService: NotaService) {
+      var notas = [];
       this.estudanteService.getEstudantes().subscribe(estudantes => {
           this.estudantes = estudantes;
+
+            // adicionar notas ao respectivo estudante
+            for(var i=0;i<this.estudantes.length;i++){
+                var estudante = this.estudantes[i];
+                this.notaService.getNotasEstudante(this.estudantes[i]._id).subscribe(_notas => {
+                     notas = _notas
+                     estudante.notas = _notas;
+                    //  console.log(estudante.notas);
+                })
+                // console.log(estudante);
+                // this.estudantes[i] = estudante;
+                // console.log(this.estudantes[i]);
+            }
+            // console.log(this.estudantes);
       });
 
-      // adicionar notas ao respectivo estudante
-      for(var i=0;i<this.estudantes.length;i++){
-          var notas = [];
-          this.notaService.getNotasEstudante(this.estudantes[i]._id).subscribe(_notas => {
-              notas = _notas;
-          })
-          this.estudantes[i].notas = notas;
-      }
+
+
   }
 
   ngOnInit() {
@@ -57,5 +69,25 @@ export class BoletimComponent implements OnInit {
           }
       });
   }
+
+  clique(estudante: any){
+    this.estudanteSelecionado = estudante;
+    this.novoNome = estudante.name;
+  }
+
+  salvarNome(){
+     
+     this.estudanteSelecionado.name = this.novoNome;
+     this.estudanteService.atualizaEstudante(this.estudanteSelecionado).subscribe(estudante => {
+       this.estudanteSelecionado = null;
+       this.novoNome = null;
+       this.estudanteService.getEstudantes().subscribe(estudantes => {
+          this.estudantes = estudantes;
+        });
+     })
+
+     
+  }
+
 
 }

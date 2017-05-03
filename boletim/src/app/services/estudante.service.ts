@@ -26,4 +26,11 @@ export class EstudanteService {
       return this.http.delete('http://localhost:3000/api/estudante/'+id).map(res => res.json());
   }
 
+  atualizaEstudante(novoEstudante:any){
+      let headers = new Headers();
+      headers.append('Content-Type','application/json');
+      return this.http.put('http://localhost:3000/api/estudante',JSON.stringify(novoEstudante),{headers: headers})
+        .map(res => res.json());
+  }
+
 }
